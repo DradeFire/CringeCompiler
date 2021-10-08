@@ -141,14 +141,12 @@ private:
 
 public:
     Parser(string file_with_code) : inArgs(false), inFunc(false), curFor(0), curIf(0) {
-        ifstream file;
-        file.open(file_with_code);
-        if (file.is_open() == 0) { throw exception(); };
-        while (file.is_open() == 1) {
-            CheckConstruction(file);
-        }
-        file.close();
-        WriteLogic(file_with_code);
+        ifstream file;             
+        file.open(file_with_code);                        //открываем исходный файл с кодом, который будет парситься
+        if (file.is_open() == 0) { throw exception(); };  //проверяем, открылся ли файл
+        while (!file.eof()) { CheckConstruction(file); }; //вызываем CheckConstruction(file); пока не конец файла
+        file.close();                                     //закрываем файл
+        WriteLogic(file_with_code);                        
     }
 };
 /*
